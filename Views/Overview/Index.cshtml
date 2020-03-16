@@ -1,0 +1,45 @@
+@model northwind_app.ViewModels.Overview.CustomersViewModel
+
+<form
+    asp-controller="Overview"
+    asp-action="StoreSearchQuery"
+    method="Post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="Customers" class="form-control" />
+        <span asp-validation-for="Customers" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
+
+<h2>Query history</h2>
+
+
+<h1>@Html.DisplayName(Model.TitlePage)</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayName(Model.TitleName)</th>
+            <th>@Html.DisplayName(Model.TitleCity)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Customers) {
+        <tr>
+            <td>@item.ContactName</td>
+            <td>@item.City</td>
+            <td>
+                <a  asp-controller="Overview" 
+                    asp-action="GetOrdersByCustomerId" 
+                    asp-route-customerId="@item.CustomerId">
+                    Orders
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
